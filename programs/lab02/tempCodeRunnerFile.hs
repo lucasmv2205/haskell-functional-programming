@@ -1,0 +1,1 @@
+(funcPow x 2) + (funcPow y 2)
