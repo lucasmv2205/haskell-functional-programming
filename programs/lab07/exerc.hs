@@ -55,7 +55,17 @@ classificacaoTriangulo x y z
   | x == y && x == z && isTriangulo x y z = "Equilatero"
   | (x == y || x == z || y == z) && isTriangulo x y z = "Isosceles"
   | x /= y && y /= z && isTriangulo x y z = "Escaleno"
-  | otherwise = "Nao forma um triangulo triangulo"
+  | otherwise = "Nao forma um triangulo"
+
+menuOpcao :: IO ()
+menuOpcao = do
+  putStrLn "1 - Digite um nome"
+  nome <- getLine
+  putStrLn "2 - Digite um matricula"
+  matricula <- getLine
+  putStrLn "3 - Digite um nota"
+  nota <- getLine
+  print ("Nome: " ++ nome ++ "; " ++ "Matricula: " ++ matricula ++ "; " ++ "Nota: " ++ nota)
 
 main :: IO ()
 main = do
@@ -68,3 +78,4 @@ main = do
   print (func 2 2)
   print (classificacaoTriangulo 2 2 25)
   print (classificacaoTriangulo 3 4 5)
+  menuOpcao
