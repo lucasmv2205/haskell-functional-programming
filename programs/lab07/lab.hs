@@ -18,6 +18,7 @@ divisao x y
   | y == 0 = -1
   | otherwise = (maior x y) / (menor x y)
 
+menu :: IO ()
 menu = do
   putStrLn "1 - Soma de 2 numeros"
   putStrLn "2 - Diferenca de 2 numeros"
