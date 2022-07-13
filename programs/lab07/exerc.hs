@@ -1,3 +1,5 @@
+-- Lucas Martins Vasconcelos 12111VCC056
+
 ordena2 :: Int -> Int -> (Int, Int)
 ordena2 x y = if x > y then (y, x) else (x, y)
 
