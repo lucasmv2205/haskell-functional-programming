@@ -39,9 +39,9 @@ nand2 p q
   | otherwise = False
 
 nand3 :: Bool -> Bool -> Bool
+nand3 True True = False
 nand3 _ False = True
 nand3 False _ = True
-nand3 _ _ = False
 
 main :: IO ()
 main = do
@@ -58,4 +58,4 @@ main = do
   print ("Nand guardas")
   print (nand2 False False)
   print ("Nand padroes")
-  print (nand3 True True)
+  print (nand3 False True)
