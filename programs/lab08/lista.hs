@@ -16,7 +16,7 @@ comb n k
   | otherwise = comb (n - 1) (k - 1) + comb (n - 1) k
 
 imprimeNvezes :: Int -> IO ()
-imprimeNvezes 0 = putStrLn "Fim"
+imprimeNvezes 1 = putStrLn "Frase"
 imprimeNvezes n = do
   putStrLn "Frase"
   imprimeNvezes (n - 1)
