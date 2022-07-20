@@ -1,6 +1,8 @@
+-- Lucas Martins Vasconcelos - 12111BCC056
+
 module Main (main) where
 
-import System.IO (stdout, hSetBuffering, BufferMode(NoBuffering))
+import System.IO (BufferMode (NoBuffering), hSetBuffering, stdout)
 
 soma x y = x + y
 
@@ -18,7 +20,7 @@ faz_deposito = do
   valor <- readLn
   deposito valor
 
-deposito:: Float -> IO ()
+deposito :: Float -> IO ()
 deposito valor = do
   conteudo <- readFile "saldo.txt"
   let total = soma (read conteudo) valor
@@ -32,7 +34,7 @@ faz_saque = do
   valor <- readLn
   saca valor
 
-saca:: Float -> IO ()
+saca :: Float -> IO ()
 saca valor = do
   conteudo <- readFile "saldo.txt"
   let total = diferenca (read conteudo) valor
@@ -42,25 +44,26 @@ saca valor = do
   appendFile "extrato.txt" ("\n-valorSaque " ++ show valor)
 
 menu :: IO ()
-menu = do hSetBuffering stdout NoBuffering
-          putStrLn "=============================="
-          putStrLn "Banco Lucas Martins Vasconcelos"
-          putStrLn "=============================="
-          putStrLn "Opcoes"
-          putStrLn "1 - Saldo"
-          putStrLn "2 - Extrato"
-          putStrLn "3 - Deposito"
-          putStrLn "4 - Saque"
-          putStrLn "5 - Fim"
-          op <- readLn
-          case (op) of
-            1 -> imprime "saldo.txt"
-            2 -> imprime "extrato.txt"
-            3 -> faz_deposito
-            4 -> faz_saque
-            5 -> putStrLn "Obrigado por usar o banco"
-            _ -> putStrLn "Opcao invalida"
-          if not (op == 5) then main else putStrLn "Saindo..."
+menu = do
+  hSetBuffering stdout NoBuffering
+  putStrLn "=============================="
+  putStrLn "Banco Lucas Martins Vasconcelos"
+  putStrLn "=============================="
+  putStrLn "Opcoes"
+  putStrLn "1 - Saldo"
+  putStrLn "2 - Extrato"
+  putStrLn "3 - Deposito"
+  putStrLn "4 - Saque"
+  putStrLn "5 - Fim"
+  op <- readLn
+  case (op) of
+    1 -> imprime "saldo.txt"
+    2 -> imprime "extrato.txt"
+    3 -> faz_deposito
+    4 -> faz_saque
+    5 -> putStrLn "Obrigado por usar o banco"
+    _ -> putStrLn "Opcao invalida"
+  if not (op == 5) then main else putStrLn "Saindo..."
 
 main :: IO ()
 main = do
