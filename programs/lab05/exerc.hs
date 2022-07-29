@@ -40,7 +40,7 @@ pertence (x: xs) element
 
 calculaMedia listaInt = somaLista listaInt / tamanhoLista listaInt
 
-maior [a] = a  
+maior [a] = a
 maior (a: t) = if (a > (maior t)) then a else (maior t)
 
 main :: IO ()
