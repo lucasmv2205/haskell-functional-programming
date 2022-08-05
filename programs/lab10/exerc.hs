@@ -48,12 +48,12 @@ type Aluno = (NomeAluno, MediaNota)
 -- letra a
 type Turma = [Aluno]
 
-notaAluno :: Aluno -> Int
-notaAluno (nome, nota) = nota
+-- letra b
+lista :: Turma
+lista = [("Joao", 100), ("Paulo", 50), ("Maria", 55), ("Jose", 62)]
 
--- aprovados::Turma->[NomeAluno]
-aprovados [] _ = []
-aprovados (a : xs) nota = 1
+aprovados :: Turma -> Int -> [NomeAluno]
+aprovados lst media = [x | (x, y) <- lst, y > media]
 
 main :: IO ()
 main = do
@@ -68,6 +68,5 @@ main = do
   print ("remove da lista pela posicao ")
   print (remove [1, 3, 13, 4] 2)
   print ("Alunos aprovados ")
-
--- let listaAlunos = [("Joao", 100), ("Paulo", 50), ("Maria", 55), ("Jose", 62)]
--- print (aprovados listaAlunos 60)
+  let listaAlunos = [("Joao", 100), ("Paulo", 50), ("Maria", 55), ("Jose", 62)]
+  print (aprovados listaAlunos 60)
