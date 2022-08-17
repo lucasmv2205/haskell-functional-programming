@@ -24,20 +24,27 @@ separa lista = (filter isDigit lista, filter (not . isDigit) lista)
 -- exercicio 3
 
 -- letra a
-const :: p1 -> p2 -> p1
-const x y = x
+-- a funcao const retorna, de dois valores que foram inseridos pelo usuario, o primeiro valor que foi inserido
+const_novo :: p1 -> p2 -> p1
+const_novo x y = x
+--nome da funcao trocado pois o prelude ja possui uma funcao built-in chamada const
 
 -- letra b
+--a funcao swap, a partir de uma tupla inserida, retorna essa mesma dupla invertida
 swap :: (b, a) -> (a, b)
 swap (x, y) = (y, x)
 
 -- letra c
+--a funcao apply, a partir de uma funcao e um valor inseridos, retorna o retorno da funcao inserida aplicada ao valor inserido
 apply :: (t1 -> t2) -> t1 -> t2
 apply f x = f x
 
 --letra d
-flip :: (t1 -> t2 -> t3) -> t2 -> t1 -> t3
-flip f x y = f y x
+--a funcao flip, a partir de uma funcao e dois valores inseridos, retorna o retorno da funcao inserida aplicada aos valores em ordem invertida
+--(o segundo elemento inserido sera o primeiro parametro da funcao e o primeiro elemento inserido sera o segundo parametro da funcao)
+flip_novo :: (t1 -> t2 -> t3) -> t2 -> t1 -> t3
+flip_novo f x y = f y x
+--nome da funcao trocado pois o prelude ja possui uma funcao built-in chamada flip
 
 -- exericio 4
 
