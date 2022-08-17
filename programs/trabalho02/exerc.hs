@@ -1,70 +1,62 @@
 -- Lucas Martins Vasconcelos - 12111BCC056
 
-module Main (main) where
+type Codigo = Int
 
-import System.IO (BufferMode (NoBuffering), hSetBuffering, stdout)
+type Nome = String
 
-soma x y = x + y
+type Preco = Float
 
-diferenca x y = x - y
+type Produto = (Codigo, Nome, Preco)
 
-imprime :: String -> IO ()
-imprime nome_arquivo = do
-  conteudo <- readFile nome_arquivo
-  putStrLn "\nValor: "
-  putStrLn conteudo
-  putStrLn "\nFim do arquivo"
+tabelaProdutos :: [Produto]
+tabelaProdutos =
+  [ (001, "Chocolate", 5.20),
+    (002, "Biscoito", 4.25),
+    (003, "Laranja", 7.25),
+    (004, "Sabao", 2.25),
+    (005, "Doritos", 8.25)
+  ]
 
-faz_deposito = do
-  putStrLn "Qual valor deseja depositar: "
-  valor <- readLn
-  deposito valor
+getCodigo :: Produto -> Codigo
+getCodigo (codigo, nome, preco) = codigo
 
-deposito :: Float -> IO ()
-deposito valor = do
-  conteudo <- readFile "saldo.txt"
-  let total = soma (read conteudo) valor
-  let totalS = show total
-  putStrLn ("\nSaldo atual " ++ totalS)
-  writeFile "saldo.txt" totalS
-  appendFile "extrato.txt" ("\n+valorDeposito " ++ show valor)
+getNome :: Produto -> Nome
+getNome (codigo, nome, preco) = nome
 
-faz_saque = do
-  putStrLn "Qual valor deseja sacar: "
-  valor <- readLn
-  saca valor
+getPreco :: Produto -> Preco
+getPreco (codigo, nome, preco) = preco
 
-saca :: Float -> IO ()
-saca valor = do
-  conteudo <- readFile "saldo.txt"
-  let total = diferenca (read conteudo) valor
-  let totalS = show total
-  putStrLn ("\nSaldo atual " ++ totalS)
-  writeFile "saldo.txt" totalS
-  appendFile "extrato.txt" ("\n-valorSaque " ++ show valor)
+isCodigo :: Codigo -> Produto -> Bool
+isCodigo cod (codigo, nome, preco) = if cod == codigo then True else False
 
-menu :: IO ()
-menu = do
-  hSetBuffering stdout NoBuffering
-  putStrLn "=============================="
-  putStrLn "Banco Lucas Martins Vasconcelos"
-  putStrLn "=============================="
-  putStrLn "Opcoes"
-  putStrLn "1 - Saldo"
-  putStrLn "2 - Extrato"
-  putStrLn "3 - Deposito"
-  putStrLn "4 - Saque"
-  putStrLn "5 - Fim"
-  op <- readLn
-  case (op) of
-    1 -> imprime "saldo.txt"
-    2 -> imprime "extrato.txt"
-    3 -> faz_deposito
-    4 -> faz_saque
-    5 -> putStrLn "Obrigado por usar o banco"
-    _ -> putStrLn "Opcao invalida"
-  if not (op == 5) then main else putStrLn "Saindo..."
+buscaPrecoPorCodigo :: Codigo -> Preco
+buscaPrecoPorCodigo codigo = getPreco (head (filter (isCodigo codigo) tabelaProdutos))
+
+buscaNomePorCodigo :: Codigo -> Nome
+buscaNomePorCodigo codigo = getNome (head (filter (isCodigo codigo) tabelaProdutos))
+
+calculaPrecos :: [Codigo] -> Float
+calculaPrecos lista = sum (map buscaPrecoPorCodigo lista)
+
+formataStrProduto :: Codigo -> String
+formataStrProduto codigo = do
+  let nomeProduto = buscaNomePorCodigo codigo
+  let precoProduto = buscaPrecoPorCodigo codigo
+  let tamanho = 30 - (length nomeProduto + length (show precoProduto))
+  nomeProduto ++ replicate tamanho '.' ++ show precoProduto ++ "\n"
+
+formataStrTotal :: Float -> String
+formataStrTotal total = do
+  let tamanho = 30 - (length "Total:" + length (show total))
+  "total:" ++ replicate tamanho '.' ++ show total ++ "\n"
+
+geraNotaFiscal :: [Codigo] -> IO ()
+geraNotaFiscal lista = do
+  writeFile "notaFiscal.txt" (foldr (++) "" (map formataStrProduto lista))
+  let total = calculaPrecos lista
+  appendFile "notaFiscal.txt" (formataStrTotal total)
 
 main :: IO ()
 main = do
-  menu
+  print ("teste")
+  geraNotaFiscal [001, 002]
