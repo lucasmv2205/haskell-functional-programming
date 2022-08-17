@@ -58,5 +58,4 @@ geraNotaFiscal lista = do
 
 main :: IO ()
 main = do
-  print ("teste")
   geraNotaFiscal [001, 002]
